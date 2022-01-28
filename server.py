@@ -1,6 +1,6 @@
 #!venv/bin/python
 
-from bottle import route, run, template
+from bottle import route, run, template, static_file
 import requests
 import re
 
@@ -48,6 +48,11 @@ def index():
             cur["menu"].append(menu)
 
     return template("index.html", canteens=data)
+
+
+@route("/style.css")
+def style():
+    return static_file("style.css", root=".")
 
 
 run(host="0.0.0.0", port=8080, server="waitress")

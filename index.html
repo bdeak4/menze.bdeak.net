@@ -1,14 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>menze.bdeak.net</title>
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<link rel="stylesheet" href="/style.css">
+    <meta charset="UTF-8">
+    <title>menze.bdeak.net</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-
-test
-
+    <div class="canteens">
+        %for canteen in canteens:
+        <div class="canteen">
+            <a href="{{canteen[1]['camera_snapshot']}}">
+                <img src="{{canteen[1]['camera_snapshot']}}" width=200>
+            </a>
+            <h2>{{canteen[1]["name"]}}</h2>
+            %if len(canteen[1]["menu"]) == 0:
+            <div>Jelovnik nije postavljen</div>
+            %end
+            %for meal in canteen[1]["menu"]:
+            <h3>{{meal["name"]}} ({{meal["from"]}}&rarr;{{meal["till"]}})</h3>
+            <ul>
+                %for dish in meal["dishes"]:
+                <li>{{dish}}</li>
+                %end
+            </ul>
+            %end
+        </div>
+        %end
+    </div>
 </body>
 </html> 
