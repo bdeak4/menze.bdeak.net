@@ -9,10 +9,51 @@ html { font-family: 'Inter', sans-serif; }
 }
 
 body {
-    margin: 0;
+    max-width: 1000px;
+    margin: 0 auto;
     color: #222;
-    background-color: #eee;
+    background-color: #ddd;
+    line-height: 1.5;
 }
 
+.canteens {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 8px;
+}
 
+.canteen {
+    width: 50%;
+    padding: 8px;
+}
 
+@media screen and (max-width: 800px) {
+    .canteen {
+        width: 100%;
+    }
+}
+
+.canteen__camera-snapshot {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.canteen__name {
+    margin: 0;
+}
+
+.canteen__error-message {
+    color: #555;
+    margin-bottom: 24px;
+}
+
+.canteen__meal__name {
+    margin-bottom: 0;
+}
+
+.canteen__meal__dishes {
+    padding-left: 16px;
+    margin-top: 0;
+    margin-bottom: 24px;
+}
