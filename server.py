@@ -2,6 +2,11 @@
 
 from bottle import route, run, template
 import requests
+import re
+
+
+filter_out = ["juha", "salata", "naranča", "banana"]
+regex = re.compile(".*" + ".*|.*".join(filter_out) + ".*", re.IGNORECASE)
 
 
 @route("/")
@@ -30,11 +35,14 @@ def index():
             menu["till"] = c["menu"][meal]["till"]
 
             dishes = []
-            for d in c["menu"][meal]["menus"]:
-                dishes.extend(d["dishes"])
-
             for d in c["menu"][meal]["meals"]:
-                dishes.append(d["dish"])
+                if not regex.match(d["dish"]):
+                    dishes.append(d["dish"])
+
+            for m in c["menu"][meal]["menus"]:
+                for d in m["dishes"]:
+                    if not regex.match(d):
+                        dishes.append(d)
 
             menu["dishes"] = list(set(dishes))
             cur["menu"].append(menu)
