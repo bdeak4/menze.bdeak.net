@@ -5,7 +5,7 @@ import requests
 import re
 
 
-filter_out = ["juha", "salata", "naranča", "banana"]
+filter_out = ["juha", "salata", "kolač", "puding", "naranča", "banana"]
 regex = re.compile(".*" + ".*|.*".join(filter_out) + ".*", re.IGNORECASE)
 
 
