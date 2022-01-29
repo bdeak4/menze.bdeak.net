@@ -35,14 +35,16 @@ def index():
             menu["till"] = c["menu"][meal]["till"]
 
             dishes = []
-            for d in c["menu"][meal]["meals"]:
-                if not regex.match(d["dish"]):
-                    dishes.append(d["dish"])
+            if "meals" in c["menu"][meal]:
+                for d in c["menu"][meal]["meals"]:
+                    if not regex.match(d["dish"]):
+                        dishes.append(d["dish"])
 
-            for m in c["menu"][meal]["menus"]:
-                for d in m["dishes"]:
-                    if not regex.match(d):
-                        dishes.append(d)
+            if "menus" in c["menu"][meal]:
+                for m in c["menu"][meal]["menus"]:
+                    for d in m["dishes"]:
+                        if not regex.match(d):
+                            dishes.append(d)
 
             menu["dishes"] = list(set(dishes))
             cur["menu"].append(menu)
