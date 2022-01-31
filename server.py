@@ -27,27 +27,28 @@ def index():
         cur["camera_active"] = camera_feed["active"]
 
         cur["menu"] = []
-        for meal in c["menu"]:
-            menu = {}
-            hr = {"lunch": "Ručak", "dinner": "Večera"}
-            menu["name"] = hr[meal]
-            menu["from"] = c["menu"][meal]["from"]
-            menu["till"] = c["menu"][meal]["till"]
+        if "menu" in c:
+            for meal in c["menu"]:
+                menu = {}
+                hr = {"lunch": "Ručak", "dinner": "Večera"}
+                menu["name"] = hr[meal]
+                menu["from"] = c["menu"][meal]["from"]
+                menu["till"] = c["menu"][meal]["till"]
 
-            dishes = []
-            if "meals" in c["menu"][meal]:
-                for d in c["menu"][meal]["meals"]:
-                    if not regex.match(d["dish"]):
-                        dishes.append(d["dish"])
+                dishes = []
+                if "meals" in c["menu"][meal]:
+                    for d in c["menu"][meal]["meals"]:
+                        if not regex.match(d["dish"]):
+                            dishes.append(d["dish"])
 
-            if "menus" in c["menu"][meal]:
-                for m in c["menu"][meal]["menus"]:
-                    for d in m["dishes"]:
-                        if not regex.match(d):
-                            dishes.append(d)
+                if "menus" in c["menu"][meal]:
+                    for m in c["menu"][meal]["menus"]:
+                        for d in m["dishes"]:
+                            if not regex.match(d):
+                                dishes.append(d)
 
-            menu["dishes"] = list(set(dishes))
-            cur["menu"].append(menu)
+                menu["dishes"] = list(set(dishes))
+                cur["menu"].append(menu)
 
     return template("index.html", canteens=data)
 
