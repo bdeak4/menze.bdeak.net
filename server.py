@@ -32,10 +32,13 @@ def index():
         cur = data[idx][1]
         cur["name"] = c["name"].replace("_", "")
 
-        camera_feed = requests.get(c["camUri"]).json()
-        cur["camera_snapshot"] = camera_feed["imagePath"]
-        cur["camera_timestamp"] = camera_feed["time"]
-        cur["camera_active"] = camera_feed["active"]
+        try:
+            camera_feed = requests.get(c["camUri"]).json()
+            cur["camera_snapshot"] = camera_feed["imagePath"]
+            cur["camera_timestamp"] = camera_feed["time"]
+            cur["camera_active"] = camera_feed["active"]
+        except:
+            cur["camera_active"] = False
 
         cur["menu"] = []
         if "menu" in c:
@@ -67,6 +70,11 @@ def index():
 @route("/style.css")
 def style():
     return static_file("style.css", root=".")
+
+
+@route("/static.gif")
+def tv_static():
+    return static_file("static.gif", root=".")
 
 
 run(host="0.0.0.0", port=8080, server="waitress")

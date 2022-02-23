@@ -10,9 +10,13 @@
     <div class="canteens">
         %for canteen in canteens:
         <div class="canteen">
+            %if canteen[1]['camera_active']:
             <a href="{{canteen[1]['camera_snapshot']}}">
                 <img src="{{canteen[1]['camera_snapshot']}}" class="canteen__camera-snapshot">
             </a>
+            %else:
+            <img src="/static.gif" class="canteen__camera-snapshot">
+            %end
             <h2 class="canteen__name">{{canteen[1]["name"]}}</h2>
             %if len(canteen[1]["menu"]) == 0:
             <div class="canteen__error-message">Jelovnik nije postavljen</div>
