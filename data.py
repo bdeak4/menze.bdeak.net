@@ -1,9 +1,5 @@
-#!venv/bin/python
-
-from bottle import route, run, template, static_file
 import requests
 import re
-
 
 filter_out = [
     "juha",
@@ -17,11 +13,10 @@ filter_out = [
     "munchmallow",
     "mlijeko",
 ]
-regex = re.compile(".*" + ".*|.*".join(filter_out) + ".*", re.IGNORECASE)
+dish_regex = re.compile(".*" + ".*|.*".join(filter_out) + ".*", re.IGNORECASE)
 
 
-@route("/")
-def index():
+def get_canteens():
     data = [(4, {}), (7, {}), (6, {}), (3, {})]
     canteens = requests.get("https://prod2.unispot.live/api/public/mess").json()
     for c in canteens:
@@ -52,29 +47,15 @@ def index():
                 dishes = []
                 if "meals" in c["menu"][meal]:
                     for d in c["menu"][meal]["meals"]:
-                        if not regex.match(d["dish"]):
+                        if not dish_regex.match(d["dish"]):
                             dishes.append(d["dish"])
 
                 if "menus" in c["menu"][meal]:
                     for m in c["menu"][meal]["menus"]:
                         for d in m["dishes"]:
-                            if not regex.match(d):
+                            if not dish_regex.match(d):
                                 dishes.append(d)
 
                 menu["dishes"] = list(set(dishes))
                 cur["menu"].append(menu)
-
-    return template("index.html", canteens=data)
-
-
-@route("/style.css")
-def style():
-    return static_file("style.css", root=".")
-
-
-@route("/static.gif")
-def tv_static():
-    return static_file("static.gif", root=".")
-
-
-run(host="0.0.0.0", port=8080, server="waitress")
+    return data
